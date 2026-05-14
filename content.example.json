@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "name": "Your Name",
+    "title": { "en": "Frontend Engineer", "sl": "Frontend inženir" },
+    "email": "your@email.com",
+    "phone": "+000 00 000 000"
+  },
+  "about": {
+    "en": "Short bio in English.",
+    "sl": "Kratka predstavitev v slovenščini."
+  },
+  "experience": [
+    {
+      "company": "Company Name",
+      "role": { "en": "Senior Frontend Developer", "sl": "Višji frontend razvijalec" },
+      "period": "2022–present",
+      "description": {
+        "en": "Description of your role and achievements.",
+        "sl": "Opis vloge in dosežkov."
+      }
+    }
+  ],
+  "skills": [
+    {
+      "category": { "en": "Frontend", "sl": "Frontend" },
+      "items": ["Angular", "TypeScript", "RxJS", "SCSS"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University Name",
+      "degree": { "en": "Bachelor of Computer Science", "sl": "Diplomirani računalničar" },
+      "period": "2012–2016"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Project Name",
+      "description": {
+        "en": "What it does.",
+        "sl": "Kaj počne."
+      },
+      "url": "https://github.com/...",
+      "tech": ["Angular", "Node.js"]
+    }
+  ],
+  "social": [
+    { "label": "GitHub", "url": "https://github.com/..." },
+    { "label": "LinkedIn", "url": "https://linkedin.com/in/..." }
+  ]
+}
