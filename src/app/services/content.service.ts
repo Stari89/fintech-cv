@@ -10,8 +10,9 @@ export class ContentService {
   readonly content = this._content.asReadonly();
 
   load(): void {
-    this.http.get<CvContent>('/api/content').subscribe(data => {
-      this._content.set(data);
+    this.http.get<CvContent>('/api/content').subscribe({
+      next: (data) => this._content.set(data),
+      error: (err) => console.error('Failed to load CV content:', err)
     });
   }
 }

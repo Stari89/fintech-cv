@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
+import { vi } from 'vitest';
 import { ContentService } from './content.service';
 import { CvContent } from '../models/content.model';
 
@@ -34,5 +35,22 @@ describe('ContentService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(mockContent);
     expect(service.content()).toEqual(mockContent);
+  });
+
+  it('should keep content null and log error when API fails', () => {
+    const spy = vi.spyOn(console, 'error');
+    service.load();
+    const req = httpMock.expectOne('/api/content');
+    req.flush('Server error', { status: 500, statusText: 'Internal Server Error' });
+    expect(service.content()).toBeNull();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should keep content null on 404', () => {
+    const spy = vi.spyOn(console, 'error');
+    service.load();
+    const req = httpMock.expectOne('/api/content');
+    req.flush('Not found', { status: 404, statusText: 'Not Found' });
+    expect(service.content()).toBeNull();
   });
 });
