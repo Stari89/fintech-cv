@@ -6,23 +6,40 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { readFileSync, existsSync } from 'node:fs';
+import rateLimit from 'express-rate-limit';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
+const CONTENT_PATH = process.env['CONTENT_PATH'] ?? join(process.cwd(), 'content.json');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
+ * API routes
  */
+const apiRouter = express.Router();
+
+apiRouter.get('/content', (_req, res) => {
+  if (!existsSync(CONTENT_PATH)) {
+    res.status(404).json({ error: 'content.json not found on server' });
+    return;
+  }
+  try {
+    const raw = readFileSync(CONTENT_PATH, 'utf-8');
+    res.json(JSON.parse(raw));
+  } catch {
+    res.status(500).json({ error: 'Failed to read content' });
+  }
+});
+
+const contactLimiter = rateLimit({ windowMs: 10 * 60 * 1000, max: 5 });
+apiRouter.post('/contact', contactLimiter, (_req, res) => {
+  // Implemented in Plan 2 (requires MariaDB)
+  res.status(501).json({ error: 'Not implemented yet' });
+});
+
+app.use('/api', apiRouter);
 
 /**
  * Serve static files from /browser
