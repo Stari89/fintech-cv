@@ -51,5 +51,39 @@ describe('LanguageService', () => {
     service.toggle();
     expect(localStorage.getItem('lang')).toBe('sl');
   });
+
+  it('should apply saved language from localStorage on init', () => {
+    localStorage.setItem('lang', 'sl');
+    service.init();
+    expect(service.lang()).toBe('sl');
+    expect(translocoSpy).toHaveBeenCalledWith('sl');
+  });
+
+  it('should fall back to "en" for non-Slovenian browser language on init', () => {
+    service.init(); // no localStorage, navigator.language defaults to en-US in test env
+    expect(service.lang()).toBe('en');
+  });
+
+  it('should ignore invalid localStorage values and use browser language', () => {
+    localStorage.setItem('lang', 'fr'); // invalid
+    service.init();
+    // 'fr' is invalid so falls back to browser lang (en in test env)
+    expect(service.lang()).toBe('en');
+  });
+
+  it('should do nothing on server platform', () => {
+    TestBed.resetTestingModule();
+    translocoSpy = vi.fn();
+    TestBed.configureTestingModule({
+      providers: [
+        LanguageService,
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: TranslocoService, useValue: { setActiveLang: translocoSpy } }
+      ]
+    });
+    const serverService = TestBed.inject(LanguageService);
+    expect(() => serverService.init()).not.toThrow();
+    expect(serverService.lang()).toBe('en');
+  });
 });
 

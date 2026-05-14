@@ -14,9 +14,10 @@ export class LanguageService {
 
   init(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    const saved = localStorage.getItem('lang') as Lang | null;
+    const saved = localStorage.getItem('lang');
+    const validLang: Lang | null = (saved === 'en' || saved === 'sl') ? saved : null;
     const browserLang: Lang = navigator.language.startsWith('sl') ? 'sl' : 'en';
-    this.applyLang(saved ?? browserLang);
+    this.applyLang(validLang ?? browserLang);
   }
 
   toggle(): void {
