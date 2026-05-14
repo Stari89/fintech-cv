@@ -6,7 +6,7 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import rateLimit from 'express-rate-limit';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -21,15 +21,15 @@ const angularApp = new AngularNodeAppEngine();
 const apiRouter = express.Router();
 
 apiRouter.get('/content', (_req, res) => {
-  if (!existsSync(CONTENT_PATH)) {
-    res.status(404).json({ error: 'content.json not found on server' });
-    return;
-  }
   try {
     const raw = readFileSync(CONTENT_PATH, 'utf-8');
     res.json(JSON.parse(raw));
-  } catch {
-    res.status(500).json({ error: 'Failed to read content' });
+  } catch (err: unknown) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+      res.status(404).json({ error: 'content.json not found on server' });
+    } else {
+      res.status(500).json({ error: 'Failed to read content' });
+    }
   }
 });
 
@@ -39,6 +39,7 @@ apiRouter.post('/contact', contactLimiter, (_req, res) => {
   res.status(501).json({ error: 'Not implemented yet' });
 });
 
+app.use(express.json({ limit: '10kb' }));
 app.use('/api', apiRouter);
 
 /**
