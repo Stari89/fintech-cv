@@ -38,19 +38,22 @@ describe('ContentService', () => {
   });
 
   it('should keep content null and log error when API fails', () => {
-    const spy = vi.spyOn(console, 'error');
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     service.load();
     const req = httpMock.expectOne('/api/content');
     req.flush('Server error', { status: 500, statusText: 'Internal Server Error' });
     expect(service.content()).toBeNull();
     expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
   });
 
   it('should keep content null on 404', () => {
-    const spy = vi.spyOn(console, 'error');
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     service.load();
     const req = httpMock.expectOne('/api/content');
     req.flush('Not found', { status: 404, statusText: 'Not Found' });
     expect(service.content()).toBeNull();
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
   });
 });
