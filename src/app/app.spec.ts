@@ -1,10 +1,22 @@
 import { TestBed } from '@angular/core/testing';
+import { PLATFORM_ID } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { App } from './app';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: TranslocoService,
+          useValue: {
+            setActiveLang: vi.fn()
+          }
+        }
+      ]
     }).compileComponents();
   });
 
@@ -14,10 +26,10 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render router outlet', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, fintech-cv');
+    const routerOutlet = compiled.querySelector('router-outlet');
+    expect(routerOutlet).toBeTruthy();
   });
 });
