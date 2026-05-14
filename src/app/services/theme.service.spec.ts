@@ -40,4 +40,24 @@ describe('ThemeService', () => {
     service.toggle();
     expect(localStorage.getItem('theme')).toBe('dark');
   });
+
+  it('should apply dark theme from localStorage on init', () => {
+    localStorage.setItem('theme', 'dark');
+    service.init();
+    expect(service.isDark()).toBe(true);
+    expect(document.body.classList.contains('dark')).toBe(true);
+  });
+
+  it('should do nothing on server platform', () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        ThemeService,
+        { provide: PLATFORM_ID, useValue: 'server' }
+      ]
+    });
+    const serverService = TestBed.inject(ThemeService);
+    expect(() => serverService.init()).not.toThrow();
+    expect(serverService.isDark()).toBe(false);
+  });
 });

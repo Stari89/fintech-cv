@@ -12,7 +12,7 @@ export class ThemeService {
   init(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     const saved = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false;
     this.applyTheme(saved ? saved === 'dark' : prefersDark);
   }
 
@@ -24,7 +24,7 @@ export class ThemeService {
     this._isDark.set(isDark);
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      this.document.body.classList.toggle('dark', isDark);
     }
-    this.document.body.classList.toggle('dark', isDark);
   }
 }
