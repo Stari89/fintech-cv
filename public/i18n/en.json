@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "about":      "About",
+    "experience": "Experience",
+    "skills":     "Skills",
+    "education":  "Education",
+    "projects":   "Projects",
+    "contact":    "Contact"
+  },
+  "hero": {
+    "prompt": "~ $ whoami"
+  },
+  "contact": {
+    "name":    "Name",
+    "email":   "Email",
+    "message": "Message",
+    "send":    "Send",
+    "success": "Message sent!",
+    "error":   "Something went wrong. Please try again."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "about":      "O meni",
+    "experience": "Izkušnje",
+    "skills":     "Spretnosti",
+    "education":  "Izobrazba",
+    "projects":   "Projekti",
+    "contact":    "Kontakt"
+  },
+  "hero": {
+    "prompt": "~ $ whoami"
+  },
+  "contact": {
+    "name":    "Ime",
+    "email":   "E-pošta",
+    "message": "Sporočilo",
+    "send":    "Pošlji",
+    "success": "Sporočilo poslano!",
+    "error":   "Prišlo je do napake. Prosimo, poskusite znova."
+  }
+}
