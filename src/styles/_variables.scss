@@ -1,0 +1,28 @@
+// Design tokens — light theme defaults
+:root {
+  // Colors
+  --color-bg:       #fafafa;
+  --color-surface:  #f0f0f0;
+  --color-border:   #e0e0e0;
+  --color-text:     #111111;
+  --color-muted:    #888888;
+  --color-accent:   #16a34a;
+
+  // Typography
+  --font-sans:  'Inter', system-ui, sans-serif;
+  --font-mono:  'JetBrains Mono', 'Courier New', monospace;
+
+  // Spacing
+  --content-max-width: 860px;
+  --section-padding:   4rem 1.5rem;
+}
+
+// Dark theme overrides — applied via `.dark` on <body>
+body.dark {
+  --color-bg:      #0d0d0d;
+  --color-surface: #1a1a1a;
+  --color-border:  #2a2a2a;
+  --color-text:    #f0f0f0;
+  --color-muted:   #555555;
+  --color-accent:  #4ade80;
+}
