@@ -1,0 +1,32 @@
+<nav class="nav">
+  <a class="nav__logo mono" href="/" data-testid="nav-logo">
+    dk<span class="accent">.</span>
+  </a>
+
+  <ul class="nav__links">
+    <li><a href="#about">{{ 'nav.about' | transloco }}</a></li>
+    <li><a href="#experience">{{ 'nav.experience' | transloco }}</a></li>
+    <li><a href="#skills">{{ 'nav.skills' | transloco }}</a></li>
+    <li><a href="#education">{{ 'nav.education' | transloco }}</a></li>
+    <li><a href="#projects">{{ 'nav.projects' | transloco }}</a></li>
+    <li><a href="#contact">{{ 'nav.contact' | transloco }}</a></li>
+  </ul>
+
+  <div class="nav__controls">
+    <button
+      class="nav__btn mono"
+      data-testid="lang-toggle"
+      (click)="language.toggle()"
+      [title]="language.lang() === 'en' ? 'Switch to Slovenian' : 'Switch to English'">
+      {{ language.lang() === 'en' ? 'SL' : 'EN' }}
+    </button>
+
+    <button
+      class="nav__btn"
+      data-testid="theme-toggle"
+      (click)="theme.toggle()"
+      [title]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'">
+      {{ theme.isDark() ? '☀️' : '🌙' }}
+    </button>
+  </div>
+</nav>
