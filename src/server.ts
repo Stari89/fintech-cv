@@ -27,6 +27,8 @@ apiRouter.get('/content', (_req, res) => {
   } catch (err: unknown) {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
       res.status(404).json({ error: 'content.json not found on server' });
+    } else if (err instanceof SyntaxError) {
+      res.status(500).json({ error: 'content.json contains invalid JSON' });
     } else {
       res.status(500).json({ error: 'Failed to read content' });
     }
